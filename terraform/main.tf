@@ -6,7 +6,12 @@ data "aws_ami" "ubuntu" {
   most_recent = true
 }
 
+locals {
+  create_security_group = true  # Set to false if the security group already exists
+}
+
 resource "aws_security_group" "OV_sg" {
+  count      = local.create_security_group ? 1 : 0
   name        = "OV_security_group"
   description = "Security group for the example application"
 
@@ -23,7 +28,7 @@ resource "aws_instance" "it_lab_2" {
   ami           = "ami-04e601abe3e1a910f"
   instance_type = "t3.micro"
 
-  vpc_security_group_ids = [aws_security_group.OV_sg.id]
+  vpc_security_group_ids = local.create_security_group ? [aws_security_group.OV_sg.id] : []
 
   key_name = "aws_key"
   tags = {
