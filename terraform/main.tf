@@ -20,7 +20,7 @@ resource "aws_security_group" "OV_sg" {
 
 
 resource "aws_instance" "it_lab_2" {
-  ami           = "${{ secrets.AMI }}"
+  ami           = "ami-04e601abe3e1a910f"
   instance_type = "t3.micro"
 
   vpc_security_group_ids = [aws_security_group.OV_sg.id]
