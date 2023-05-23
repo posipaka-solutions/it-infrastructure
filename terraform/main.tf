@@ -1,5 +1,17 @@
 provider "aws" {
-  region = "us-west-2"
+  region  = "eu-central-1"
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/*20.04-amd64-server-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 
 resource "aws_security_group" "OV_sg" {
@@ -16,11 +28,18 @@ resource "aws_security_group" "OV_sg" {
 
 
 resource "aws_instance" "it_lab_2" {
-  ami           = "${secrets.AMI}" #"ami-04e601abe3e1a910f"
+  ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
   vpc_security_group_ids = [aws_security_group.OV_sg.id]
 
   key_name = "aws_key"
+  tags = {
+    Name = var.ec2_name
+  }
 
+}
+
+variable "ec2_name" {
+  type = string
 }
