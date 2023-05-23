@@ -15,6 +15,7 @@ resource "aws_security_group" "OV_sg" {
     to_port     = 80
     self        = true
     protocol    = "tcp"
+    protocol         = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
