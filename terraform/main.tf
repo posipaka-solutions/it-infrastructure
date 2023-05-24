@@ -44,14 +44,12 @@ resource "aws_instance" "it_lab_2" {
   }
   user_data = <<-EOF
   #!/bin/bash
-  sudo apt install apt-transport-https ca-certificates curl software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-  apt-cache policy docker-ce
-  sudo apt install docker-ce
-  docker pull volvinbur/it-labs:0.1.0
-  docker run -p 80:80 -d --restart unless-stopped --name it-labs volvinbur/it-labs:0.1.0
-  docker run -d --name watchtower --restart unless-stopped -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower it-labs --interval 60
+  sudo apt-get update
+  sudo apt install docker.io
+  sudo snap install docker
+  sudo docker pull volvinbur/it-labs:0.1.0
+  sudo docker run -p 80:80 -d --restart unless-stopped --name it-labs volvinbur/it-labs:0.1.0
+  sudo docker run -d --name watchtower --restart unless-stopped -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower it-labs --interval 60
   EOF
 
 }
