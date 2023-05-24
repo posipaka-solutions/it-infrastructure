@@ -8,6 +8,11 @@ on:
         required: true
         default: 'it-lab-2'
         type: string
+      ec2_sg_name:
+        description: 'Name For AWS Security Group Instance'
+        required: true
+        default: 'OV_sg'
+        type: string
 jobs:
   provision-ec2:
     runs-on: ubuntu-latest
@@ -27,9 +32,11 @@ jobs:
         with:
           terraform_wrapper: false
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
         id:   apply
         env:
           TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
+          TF_VAR_ec2_sg_name: "${{ github.event.inputs.ec2_sg_name }}"
         run: |
           cd terraform/
           terraform init
