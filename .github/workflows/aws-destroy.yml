@@ -1,0 +1,28 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: |
+          terraform destroy -auto-approve
+          terraform state rm aws_instance.it_lab_2  
+
+      - name: Cleanup
+        run: rm -rf .terraform* terraform.tfstate*
+
