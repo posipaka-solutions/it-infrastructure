@@ -7,7 +7,9 @@ RUN npm i create-stylelint && \
 
 COPY src/ .
 
-# RUN npx stylelint "**/*.css"
+# RUN npx stylelint "**/*.css" && \
+#     npx stylelint "**/*.js" && \
+#     npx stylelint "**/*.html"
 
 FROM nginx:1.23-alpine as webserver
 
