@@ -21,8 +21,6 @@ jobs:
       - name: Terraform Destroy
         run: |
           terraform destroy -auto-approve
-          terraform state rm aws_instance.it_lab_2  
-
       - name: Cleanup
         run: rm -rf .terraform* terraform.tfstate*
 
