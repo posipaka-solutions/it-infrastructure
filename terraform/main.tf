@@ -7,7 +7,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_security_group" "OV_sg" {
-  name        = "OV_security_group"
+  name        = var.ec2_sg_name
   description = "Security group for the example application"
 
   ingress {
@@ -55,5 +55,8 @@ resource "aws_instance" "it_lab_2" {
 }
 
 variable "ec2_name" {
+  type = string
+}
+variable "ec2_sg_name" {
   type = string
 }
