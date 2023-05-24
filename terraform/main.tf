@@ -45,7 +45,7 @@ resource "aws_instance" "it_lab_2" {
   user_data = <<-EOF
   #!/bin/bash
   sudo apt-get update
-  sudo apt install docker.io
+  sudo apt install docker.io -y
   sudo snap install docker
   sudo docker pull volvinbur/it-labs:0.1.0
   sudo docker run -p 80:80 -d --restart unless-stopped --name it-labs volvinbur/it-labs:0.1.0
