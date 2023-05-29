@@ -2,17 +2,7 @@ name: Create AWS instance
 
 on:
   workflow_dispatch:
-    inputs:
-      ec2-name:
-        description: 'Name For AWS Instance'
-        required: true
-        default: 'it-lab-2'
-        type: string
-      ec2_sg_name:
-        description: 'Name For AWS Security Group Instance'
-        required: true
-        default: 'OV_sg'
-        type: string
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -41,9 +31,9 @@ jobs:
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform plan -input=false -var="ec2_name=${{ github.event.inputs.ec2-name }}" -var="sg_name=${{ github.event.inputs.ec2_sg_name }}"
+        run: terraform plan -input=false
 
         # On push to "main", build or change infrastructure according to Terraform configuration files
         # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false  -var="ec2_name=${{ github.event.inputs.ec2-name }}" -var="sg_name=${{ github.event.inputs.ec2_sg_name }}"
+        run: terraform apply -auto-approve -input=false

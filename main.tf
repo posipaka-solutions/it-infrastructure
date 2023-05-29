@@ -15,7 +15,7 @@ terraform {
   }
 }
 resource "aws_security_group" "OV_sg" {
-  name        = var.ec2_sg_name
+  name        = "OV_security"
   description = "Security group for the example application"
 
   ingress {
@@ -48,7 +48,7 @@ resource "aws_instance" "it_lab_2" {
 
   key_name = "aws_key"
   tags = {
-    Name = var.ec2_name
+    Name = "it_lab_2"
   }
   user_data = <<-EOF
   #!/bin/bash
