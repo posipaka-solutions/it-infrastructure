@@ -5,7 +5,29 @@ on:
     branches: ['main']
 
 jobs:
+  terraform-destroy:
+    name: Destroy Previous AWS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Plan Destroy
+        run: terraform plan -destroy
+
+      - name: Terraform  Destroy
+        run: terraform destroy -auto-approve
   docker-publish:
+    needs: terraform-destroy
     name: Push Docker image to the registry
     runs-on: ubuntu-22.04
     steps:
