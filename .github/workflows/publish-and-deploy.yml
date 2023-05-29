@@ -6,9 +6,8 @@ on:
 
 jobs:
   docker-publish:
-    push_to_reg:
-      name: Push Docker image to the registry
-      runs-on: ubuntu-22.04
+    name: Push Docker image to the registry
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
