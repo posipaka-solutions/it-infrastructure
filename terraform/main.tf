@@ -5,7 +5,15 @@ provider "aws" {
 data "aws_ami" "ubuntu" {
   most_recent = true
 }
+terraform {
+  cloud {
+    organization = "baryn72"
 
+    workspaces {
+      name = "GitHub-test"
+    }
+  }
+}
 resource "aws_security_group" "OV_sg" {
   name        = var.ec2_sg_name
   description = "Security group for the example application"
